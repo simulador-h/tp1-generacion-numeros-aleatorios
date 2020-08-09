@@ -1,0 +1,25 @@
+{
+  "name": "tp1-generacion-numeros-aleatorios",
+  "version": "1.0.0",
+  "description": "Simulación 2020 | TP-1 | Generación de Números Aleatorios",
+  "main": "pages/index.vue",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simulador-h/tp1-generacion-numeros-aleatorios.git"
+  },
+  "author": "undre4m",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simulador-h/tp1-generacion-numeros-aleatorios/issues"
+  },
+  "homepage": "https://github.com/simulador-h/tp1-generacion-numeros-aleatorios#readme",
+  "dependencies": {
+    "nuxt": "^2.14.1"
+  }
+}
