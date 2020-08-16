@@ -8,17 +8,17 @@
       <el-form-item label="Método">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-radio v-model="form.algorithm" label="mixed" style="width: 100%;" border>
+            <el-radio v-model="form.algorithm" label="mixed" style="width: 100%;" :disabled="!!generator" border>
               Mixto
             </el-radio>
           </el-col>
           <el-col :span="6">
-            <el-radio v-model="form.algorithm" label="multiplicative" style="width: 100%;" border>
+            <el-radio v-model="form.algorithm" label="multiplicative" style="width: 100%;" :disabled="!!generator" border>
               Multiplicativo
             </el-radio>
           </el-col>
           <el-col :span="6">
-            <el-radio v-model="form.algorithm" label="additive" style="width: 100%;" border>
+            <el-radio v-model="form.algorithm" label="additive" style="width: 100%;" :disabled="!!generator" border>
               Aditivo
             </el-radio>
           </el-col>
@@ -28,13 +28,13 @@
       <el-form-item label="Parámetros">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-input v-model.number="form.multiplier" prefix-icon="el-icon-setting" placeholder="Multiplicador" />
+            <el-input v-model.number="form.multiplier" prefix-icon="el-icon-setting" placeholder="Multiplicador" :disabled="!!generator" />
           </el-col>
           <el-col :span="6">
-            <el-input v-model.number="form.increment" prefix-icon="el-icon-setting" placeholder="Incremento" />
+            <el-input v-model.number="form.increment" prefix-icon="el-icon-setting" placeholder="Incremento" :disabled="!!generator" />
           </el-col>
           <el-col :span="6">
-            <el-input v-model.number="form.modulus" prefix-icon="el-icon-setting" placeholder="Módulo" />
+            <el-input v-model.number="form.modulus" prefix-icon="el-icon-setting" placeholder="Módulo" :disabled="!!generator" />
           </el-col>
         </el-row>
       </el-form-item>
@@ -42,22 +42,37 @@
       <el-form-item label="Semillas">
         <el-row :gutter="20">
           <el-col :span="5">
-            <el-input v-model.number="form.seeds[0]" suffix-icon="el-icon-star-off" placeholder="α" />
+            <el-input v-model.number="form.seeds[0]" suffix-icon="el-icon-star-off" placeholder="α" :disabled="!!generator" />
           </el-col>
           <el-col v-show="form.algorithm === 'additive'" :span="5">
-            <el-input v-model.number="form.seeds[1]" suffix-icon="el-icon-star-off" placeholder="β" />
+            <el-input v-model.number="form.seeds[1]" suffix-icon="el-icon-star-off" placeholder="β" :disabled="!!generator" />
           </el-col>
 
-          <el-col :span="form.algorithm !== 'additive' ? 13 : 8">
+          <el-col v-if="!generator" :span="form.algorithm !== 'additive' ? 13 : 8">
             <el-button type="primary" native-type="submit" icon="el-icon-grape" style="width: 100%;">
               Generar
             </el-button>
           </el-col>
+
+          <el-col v-else :span="form.algorithm !== 'additive' ? 13 : 8">
+            <el-button-group style="width: 100%;">
+              <el-button type="primary" icon="el-icon-grape" style="width: 75%;" @click="generateNext()">
+                Siguente
+              </el-button>
+              <el-button type="primary" icon="el-icon-edit-outline" style="width: 25%;" @click="editGenerator()" />
+            </el-button-group>
+          </el-col>
+        </el-row>
+      </el-form-item>
+
+      <el-form-item label="Números">
+        <el-row :gutter="20">
+          <el-col :span="18">
+            <el-input v-model="c_randoms" type="textarea" :rows="12" readonly />
+          </el-col>
         </el-row>
       </el-form-item>
     </el-form>
-
-    <el-input v-model="textarea" type="textarea" :rows="5" />
   </el-container>
 </template>
 
@@ -102,29 +117,51 @@ export default {
         modulus: undefined,
         seeds: new Array(2),
       },
-      rands: [],
+      randoms: [],
+      generator: undefined,
     };
+  },
+  computed: {
+    c_randoms: {
+      get() {
+        return this.randoms.map(
+          rnd => rnd.toString().substring(0, 6),
+        ).join(', ');
+      },
+    },
   },
   methods: {
     generate() {
       const { algorithm, multiplier, increment, modulus, seeds } = this.form;
 
-      let generator;
+      const loading = this.$loading({ lock: true });
 
       switch (algorithm) {
         case 'mixed':
-          generator = lcgMixed(multiplier, increment, modulus, seeds[0]);
+          this.generator = lcgMixed(multiplier, increment, modulus, seeds[0]);
           break;
         case 'multiplicative':
-          generator = lcgMultiplicative(multiplier, modulus, seeds[0]);
+          this.generator = lcgMultiplicative(multiplier, modulus, seeds[0]);
           break;
         case 'additive':
-          generator = lcgAdditive(modulus, seeds);
+          this.generator = lcgAdditive(modulus, seeds);
           break;
       }
 
-      const rands = new Array(10).fill().map(() => generator.next().value / modulus);
-      console.log(rands);
+      this.randoms = new Array(20000).fill().map(() => this.generator.next().value / modulus);
+
+      loading.close();
+    },
+
+    generateNext() {
+      this.randoms.push(
+        this.generator.next().value / this.form.modulus,
+      );
+    },
+
+    editGenerator() {
+      this.generator = undefined;
+      this.randoms = [];
     },
   },
 };
