@@ -29,6 +29,10 @@
 </template>
 
 <style>
+body {
+  margin: 0;
+}
+
 .el-aside {
   width: 64px;
   overflow: visible;
@@ -40,6 +44,7 @@
 
 .el-menu {
   min-height: 100vh;
+  z-index: 1000;
 }
 
 .el-menu:not(.el-menu--collapse) {

@@ -2,27 +2,12 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">
-        my-app
+      <h1>
+        TP № 1
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <h2>
+        Generación de Números Aleatorios
+      </h2>
     </div>
   </div>
 </template>
@@ -34,52 +19,13 @@ export default Vue.extend({});
 </script>
 
 <style>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
-
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-.title {
+  height: 100%;
   font-family:
     'Quicksand',
     'Source Sans Pro',
@@ -90,22 +36,17 @@ export default Vue.extend({});
     'Helvetica Neue',
     Arial,
     sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+h1 {
+  font-size: 3rem;
+  font-weight: 200;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
 }
 
-.links {
-  padding-top: 15px;
+h2 {
+  font-size: 1.5rem;
+  font-weight: 100;
 }
 </style>

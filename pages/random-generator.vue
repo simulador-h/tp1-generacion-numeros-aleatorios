@@ -7,17 +7,17 @@
     <el-form ref="form" :model="form" label-width="120px" @submit.native.prevent="generate()">
       <el-form-item label="Método">
         <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :span="7">
             <el-radio v-model="form.algorithm" label="mixed" style="width: 100%;" :disabled="!!generator" border>
               Mixto
             </el-radio>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="7">
             <el-radio v-model="form.algorithm" label="multiplicative" style="width: 100%;" :disabled="!!generator" border>
               Multiplicativo
             </el-radio>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="7">
             <el-radio v-model="form.algorithm" label="additive" style="width: 100%;" :disabled="!!generator" border>
               Aditivo
             </el-radio>
@@ -27,34 +27,34 @@
 
       <el-form-item label="Parámetros">
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-input v-model.number="form.multiplier" prefix-icon="el-icon-setting" placeholder="Multiplicador" :disabled="!!generator" />
+          <el-col :span="7">
+            <el-input-number v-model.number="form.multiplier" prefix-icon="el-icon-setting" placeholder="Multiplicador" :controls="false" :disabled="!!generator" />
           </el-col>
-          <el-col :span="6">
-            <el-input v-model.number="form.increment" prefix-icon="el-icon-setting" placeholder="Incremento" :disabled="!!generator" />
+          <el-col :span="7">
+            <el-input-number v-model.number="form.increment" prefix-icon="el-icon-setting" placeholder="Incremento" :controls="false" :disabled="!!generator" />
           </el-col>
-          <el-col :span="6">
-            <el-input v-model.number="form.modulus" prefix-icon="el-icon-setting" placeholder="Módulo" :disabled="!!generator" />
+          <el-col :span="7">
+            <el-input-number v-model.number="form.modulus" prefix-icon="el-icon-setting" placeholder="Módulo" :controls="false" :disabled="!!generator" />
           </el-col>
         </el-row>
       </el-form-item>
 
       <el-form-item label="Semillas">
         <el-row :gutter="20">
-          <el-col :span="5">
-            <el-input v-model.number="form.seeds[0]" suffix-icon="el-icon-star-off" placeholder="α" :disabled="!!generator" />
+          <el-col :span="7">
+            <el-input-number v-model.number="form.seeds[0]" suffix-icon="el-icon-star-off" placeholder="α" :controls="false" :disabled="!!generator" />
           </el-col>
-          <el-col v-show="form.algorithm === 'additive'" :span="5">
-            <el-input v-model.number="form.seeds[1]" suffix-icon="el-icon-star-off" placeholder="β" :disabled="!!generator" />
+          <el-col v-show="form.algorithm === 'additive'" :span="7">
+            <el-input-number v-model.number="form.seeds[1]" suffix-icon="el-icon-star-off" placeholder="β" :controls="false" :disabled="!!generator" />
           </el-col>
 
-          <el-col v-if="!generator" :span="form.algorithm !== 'additive' ? 13 : 8">
+          <el-col v-if="!generator" :span="form.algorithm !== 'additive' ? 14 : 7">
             <el-button type="primary" native-type="submit" icon="el-icon-grape" style="width: 100%;">
               Generar
             </el-button>
           </el-col>
 
-          <el-col v-else :span="form.algorithm !== 'additive' ? 13 : 8">
+          <el-col v-else :span="form.algorithm !== 'additive' ? 14 : 7">
             <el-button-group style="width: 100%;">
               <el-button type="primary" icon="el-icon-grape" style="width: 75%;" @click="generateNext()">
                 Siguente
@@ -67,7 +67,7 @@
 
       <el-form-item label="Números">
         <el-row :gutter="20">
-          <el-col :span="18">
+          <el-col :span="21">
             <el-input v-model="c_randoms" type="textarea" :rows="12" readonly />
           </el-col>
         </el-row>
@@ -125,7 +125,7 @@ export default {
     c_randoms: {
       get() {
         return this.randoms.map(
-          rnd => rnd.toString().substring(0, 6),
+          rnd => rnd.toFixed(4),
         ).join(', ');
       },
     },

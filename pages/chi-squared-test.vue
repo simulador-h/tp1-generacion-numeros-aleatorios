@@ -113,7 +113,7 @@ export default {
     c_randoms: {
       get() {
         return this.randoms.map(
-          rnd => rnd.toString().substring(0, 6),
+          rnd => rnd.toFixed(4),
         ).join(', ');
       },
     },
