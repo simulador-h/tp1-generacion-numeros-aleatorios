@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Element from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/es'
+import Vue from 'vue';
+import Element from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/es';
 
-Vue.use(Element, { locale })
+Vue.use(Element, { locale });

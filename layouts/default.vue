@@ -1,62 +1,64 @@
 <template>
-  <div>
-    <Nuxt />
-  </div>
+  <el-container>
+    <el-aside width>
+      <el-menu :router="true" :default-active="$route.path" :collapse="isCollapsed">
+        <el-menu-item @click="toogleCollapse()">
+          <i class="el-icon-menu" />
+        </el-menu-item>
+        <el-menu-item index="/">
+          <i class="el-icon-house" />
+          <span>Home</span>
+        </el-menu-item>
+        <el-menu-item index="/random-generator">
+          <i class="el-icon-coin" />
+          <span>Generador</span>
+        </el-menu-item>
+        <el-menu-item index="/chi-squared-test">
+          <i class="el-icon-document" />
+          <span>Test de χ²</span>
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
+
+    <el-container>
+      <el-main>
+        <nuxt />
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+.el-aside {
+  width: 64px;
+  overflow: visible;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
+.el-container > .el-main {
+  padding: 25px 50px;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.el-menu {
+  min-height: 100vh;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.el-menu:not(.el-menu--collapse) {
+  width: 200px;
 }
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      isCollapsed: true,
+    };
+  },
+  methods: {
+    toogleCollapse() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+  },
+};
+
+</script>
